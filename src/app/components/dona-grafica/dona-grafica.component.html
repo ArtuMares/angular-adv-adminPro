@@ -1,0 +1,14 @@
+<div class="card">
+    <div class="card-body">
+        <h3>{{titulo}}</h3>
+        <div style="display: block">
+            <canvas baseChart
+                    [title]="titulo"
+                    [data]="doughnutChartData"
+                    type="doughnut">
+            </canvas>
+        </div>
+    </div>
+</div>
+<h3>{{doughnutChartLabels1 |json}}</h3>
+<!-- <h3>{{data |json}}</h3> -->
