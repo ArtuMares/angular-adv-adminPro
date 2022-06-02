@@ -4,6 +4,11 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: js
 */
+const customInit = () =>{
+
+
+
+
 $(function() {
     "use strict";
     $(function() {
@@ -155,3 +160,6 @@ $(function() {
     });
 
 });
+
+}
+customInit();

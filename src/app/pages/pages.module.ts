@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { ComponentsModule } from '../components/components.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
@@ -13,13 +14,13 @@ import { SharedModule } from '../shared/shared.module';
 
 
 
-
 @NgModule({
   declarations: [
+    AccountSettingsComponent,
     DashboardComponent,
     Grafica1Component,
     PagesComponent,
-    ProgressComponent
+    ProgressComponent,
   ],
   imports: [
     CommonModule,
@@ -29,10 +30,11 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule
   ],
   exports:[
+    AccountSettingsComponent,
     DashboardComponent,
     Grafica1Component,
     PagesComponent,
-    ProgressComponent
+    ProgressComponent,
   ]
 })
 export class PagesModule { }
