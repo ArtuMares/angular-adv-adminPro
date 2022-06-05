@@ -10,10 +10,13 @@ export class SidebarService {
     icon: "mdi mdi-gauge",
     submenu: [
       {title: "Dashboard", url: "/"},
-      {title: "ProgressBar", url: "/dashboard/progress"},
-      {title: "Gráficas", url: "/dashboard/grafica"}
+      {title: "ProgressBar", url: "progress"},
+      {title: "Gráficas", url: "grafica"},
+      {title: "Promesas", url: "promesas"},
+      {title: "Rxjs", url: "rxjs"},
     ]
-  }];
+  }
+];
 
   constructor() { }
 }
