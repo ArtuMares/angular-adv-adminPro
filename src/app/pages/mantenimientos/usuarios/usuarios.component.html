@@ -1,0 +1,77 @@
+<div class="row amimated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input class="form-control" placeholder="Buscar usuario..." type="text" #txtTermino (keyup)="buscar(txtTermino.value)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="cargando" class="row amimated fadeIn fast">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!cargando" class="row amimated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 *ngIf="usuarios == usuariosTemp" class="card-title">Mostrando desde {{desde+1}} hasta {{desde+usuarios.length}} del total de {{totalUsuario}}</h4>
+                <h4 *ngIf="usuarios != usuariosTemp" class="card-title">Mostrando {{usuarios.length}} usuarios con: <b>"{{txtTermino.value}}"</b></h4>
+                <h6 class="card-subtitle">Usuarios registrados en la aplicación.</h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Avatar</th>
+                                <th>Correo</th>
+                                <th>Nombre</th>
+                                <th>Role</th>
+                                <th>Auth</th>
+                                <th class="text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let usuario of usuarios">
+                                <td *ngIf="usuarios == usuariosTemp"class="w50">{{desde+usuarios.indexOf(usuario)+1}}</td>
+                                <td *ngIf="usuarios != usuariosTemp" class="w50">{{usuarios.indexOf(usuario)+1}}</td>
+                                <td class="w100 text-center"><img class="avatar cursor-p" (click)="abrirModal(usuario)" [src]="usuario.imagenUrl" alt=""></td>
+                                <td>{{usuario.email}}</td>
+                                <td >{{usuario.nombre}}</td>
+                                <td class="w130">
+                                    <select (change)="cambiarRole(usuario)" [(ngModel)]="usuario.role" class="form-control" name="" id="">
+                                        <option value="ADMIN_ROLE">Admin</option>   
+                                        <option value="USER_ROLE">User</option>   
+                                    </select>
+                                </td>
+                                <td class="w100">
+                                    <span *ngIf="usuario.google" class="label label-danger">Google</span>
+                                    <span *ngIf="!usuario.google"class="label label-info">Email</span>    
+                                </td>
+                                <td class="text-nowrap w100 text-center">
+                                    <a class="cursor-p" (click)="eliminarUsuario(usuario)" data-toggle="tooltip" data-original-title="Borrar"> <i
+                                            class="fa fa-close text-danger"></i> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <h4 *ngIf="usuarios.length == 0"><b> No hubo resultados de la busqueda </b></h4>    
+                    </table>
+                </div>
+                <div *ngIf="usuarios == usuariosTemp">
+                    <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anteriores</button>
+                    &nbsp; &nbsp;
+                    <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguientes</button>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
