@@ -47,7 +47,7 @@ export class ModalImagenComponent implements OnInit {
 
     this.fu.actualizarFoto(this.imagenSubir!, tipo , id)
       .then(img => {
-        Swal.fire("Guardado", "La imagen de perfil fue actualizada exitosamente", "success");
+        Swal.fire("Guardado", `La imagen fue actualizada exitosamente`, "success");
         this.mi.nuevaImagen.emit(img);
         this.cerrarModal();
       }).catch( err=>{
