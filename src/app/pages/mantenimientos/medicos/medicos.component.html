@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input  (keyup)="buscar(txtTermino.value)" class="form-control" placeholder="Buscar usuario..." type="text" #txtTermino >
+                <input  (keyup)="buscar(txtTermino.value)" class="form-control" placeholder="Buscar medico..." type="text" #txtTermino >
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-8">
-                        <h4 class="card-title">Total de Medicos: {{medicos?.length}}</h4>
+                        <h4 class="card-title">Total de Medicos: {{medicos.length}}</h4>
                         <h6 class="card-subtitle">Medicos registrados en la aplicación</h6>
                     </div>
                     <div class="col">

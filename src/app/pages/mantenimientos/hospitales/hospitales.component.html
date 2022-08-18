@@ -2,13 +2,13 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input class="form-control" placeholder="Buscar usuario..." type="text" #txtTermino (keyup)="buscar(txtTermino.value)">
+                <input class="form-control" placeholder="Buscar hospital..." type="text" #txtTermino (keyup)="buscar(txtTermino.value)">
             </div>
         </div>
     </div>
 </div>
 
-<div *ngIf="cargando" class="row amimated fadeIn fast">
+<div *ngIf="cargando" class="row animated fadeIn fast">
     <div class="col-12">
         <div class="alert alert-info text-center">
             <h4 class="alert-heading">Cargando</h4>

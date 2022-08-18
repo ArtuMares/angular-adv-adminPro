@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
 declare const google: any;
 @Component({
@@ -20,7 +20,7 @@ export class LoginComponent implements AfterViewInit {
     remember: [false]
   });
 
-  constructor(private Router:Router, private fb: FormBuilder, private us: UsuarioService) { }
+  constructor(private Router:Router, private fb: UntypedFormBuilder, private us: UsuarioService) { }
 
 
   ngAfterViewInit(): void {

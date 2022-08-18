@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { HospitalService } from '../../../services/hospital.service';
 import { Hospital } from '../../../models/hospital.model';
 import { MedicoService } from '../../../services/medico.service';
@@ -15,13 +15,13 @@ import { delay } from 'rxjs';
 })
 export class MedicoComponent implements OnInit {
 
-  public medicoForm!:FormGroup;
+  public medicoForm!:UntypedFormGroup;
   public hospitales: Hospital[] = [];
 
   public medicoSeleccionado?:Medico;
   public hospitalSeleccionado?:Hospital ;
 
-  constructor(private fb:FormBuilder, private hs:HospitalService, private ms:MedicoService, private router:Router, private ar:ActivatedRoute) { }
+  constructor(private fb:UntypedFormBuilder, private hs:HospitalService, private ms:MedicoService, private router:Router, private ar:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.ar.params.subscribe(({id}) => this.cargarMedico(id));
