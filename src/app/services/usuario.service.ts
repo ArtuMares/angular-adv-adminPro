@@ -39,17 +39,6 @@ export class UsuarioService {
     });
   }
 
-  async logout() {
-    localStorage.removeItem("token");
-    if (this.usuario?.google) {
-      await google.accounts.id.revoke(this.usuario.email, () => {
-        //google.accounts.id.disableAutoSelect();
-      });
-    }
-    this.ngZone.run(() => {
-      this.router.navigateByUrl("/login");
-    })
-  }
 
   get token(){
     return localStorage.getItem("token") || "";
@@ -57,6 +46,10 @@ export class UsuarioService {
 
   get uid(){
     return this.usuario?.uid || "";
+  }
+
+  get role(): "USER_ROLE" | "ADMIN_ROLE"{
+    return this.usuario?.role!;
   }
 
   get headers(){
@@ -76,7 +69,7 @@ export class UsuarioService {
       map((resp: any) => {
         const { nombre, email, role, google, img = "", uid} = resp.usuario;
         this.usuario = new Usuario(nombre, email, "", img, google, role, uid);
-        localStorage.setItem("token", resp.token);
+        this.guardarLocalStorage(resp.token, resp.menu);
         return true;
       })
       , catchError(err => {
@@ -90,7 +83,7 @@ export class UsuarioService {
     return this.http.post(`${base_url}/usuarios`, formData)
       .pipe(
         tap((resp: any) => {
-          localStorage.setItem("token", resp.token);
+          this.guardarLocalStorage(resp.token, resp.menu);
         })
       );;
   }
@@ -117,7 +110,7 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login`, formData)
       .pipe(
         tap((resp: any) => {
-          localStorage.setItem("token", resp.token);
+          this.guardarLocalStorage(resp.token, resp.menu);
         })
       );
   }
@@ -127,7 +120,7 @@ export class UsuarioService {
       .pipe(
         tap((resp: any) => {
           console.log({ login: resp });
-          localStorage.setItem("token", resp.token);
+          this.guardarLocalStorage(resp.token, resp.menu);
         })
       );
   }
@@ -142,5 +135,23 @@ export class UsuarioService {
           usuarios
         };
       }))
+  }
+
+  guardarLocalStorage(token:string, menu:any){
+        localStorage.setItem("token", token);
+        localStorage.setItem("menu", JSON.stringify(menu));
+  }
+
+  async logout() { 
+    localStorage.removeItem("menu")
+    localStorage.removeItem("token");
+    if (this.usuario?.google) {
+      await google.accounts.id.revoke(this.usuario.email, () => {
+        //google.accounts.id.disableAutoSelect();
+      });
+    }
+    this.ngZone.run(() => {
+      this.router.navigateByUrl("/login");
+    })
   }
 }

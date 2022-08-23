@@ -34,13 +34,18 @@ export class BusquedasService {
   }
 
   private transformarHospitales(resultados:any[]):Hospital[]{
-    return resultados
+    return resultados;
   }
 
   private transformarMedicos(resultados:any): Medico[]{
   return resultados;
   }
   
+  busquedaGlobal(termino:string){
+    // http://localhost:3000/api/busquedas/Rob
+    const url = `${base_url}/busquedas/${termino}`;
+    return this.http.get<any[]>(url, this.headers)
+  }
 
   buscar(tipo: "usuarios"| "medicos" | "hospitales",
          termino:string ){

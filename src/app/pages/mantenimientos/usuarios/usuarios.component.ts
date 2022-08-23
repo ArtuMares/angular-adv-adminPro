@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario.model';
 
 import Swal from 'sweetalert2';
@@ -7,6 +7,7 @@ import { BusquedasService } from 'src/app/services/busquedas.service';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { delay, Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios',
@@ -14,17 +15,20 @@ import { delay, Subscription } from 'rxjs';
   styles: [
   ]
 })
-export class UsuariosComponent implements OnInit, OnDestroy {
+export class UsuariosComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  @ViewChild('txtTermino') txtTermino?:ElementRef;
 
   public totalUsuario: number = 0;
   public usuarios: Usuario[] = [];
   public usuariosTemp: Usuario[] = [];
   public desde: number = 0;
   public cargando: boolean = true
+  private timeout:any;
 
   private imgSubs?:Subscription;
 
-  constructor(private us: UsuarioService, private bs: BusquedasService, private mis:ModalImagenService) { }
+  constructor(private us: UsuarioService, private bs: BusquedasService, private mis:ModalImagenService, private ar:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.cargarUsuarios();
@@ -33,6 +37,15 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       this.cargarUsuarios();
     });
   }
+  ngAfterViewInit(): void {
+    this.ar.params.subscribe(({usuario}) =>{
+      if(usuario){ 
+        this.buscar(usuario);
+        this.txtTermino!.nativeElement.value = usuario;
+        }
+    });
+  }
+
   ngOnDestroy(): void {
     this.imgSubs?.unsubscribe();
   }
@@ -57,14 +70,19 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   buscar(termino: string) {
-    if(termino.length === 0){
-      return this.usuarios = this.usuariosTemp;
-    }
-    this.bs.buscar("usuarios", termino)
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.cargando =true;
+      if (termino.trim().length < 1) {
+        return this.cargarUsuarios();
+      }
+      this.bs.buscar("usuarios", termino.trim())
       .subscribe((resultados:any) => {
         this.usuarios = resultados!;
+        this.cargando =false;
       });
       return;
+    }, 500);
   }
 
   cambiarRole(usuario:Usuario){

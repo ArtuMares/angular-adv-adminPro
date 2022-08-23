@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SettingsService } from '../services/settings.service';
+import { SidebarService } from '../services/sidebar.service';
 
 declare function  customInit():any;
 
@@ -9,8 +10,9 @@ declare function  customInit():any;
   styleUrls: ['./pages.component.css']
 })
 export class PagesComponent {
-  constructor(private SV:SettingsService) { 
+  constructor(private SV:SettingsService, private ss:SidebarService) { 
     customInit();
+    this.ss.cargarMenu();
   } 
 
 }

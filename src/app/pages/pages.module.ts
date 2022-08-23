@@ -19,6 +19,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { SharedModule } from '../shared/shared.module';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
+import { BusquedasComponent } from './busquedas/busquedas.component';
 
 
 
@@ -36,6 +37,7 @@ import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component'
     HospitalesComponent,
     MedicosComponent,
     MedicoComponent,
+    BusquedasComponent,
   ],
   imports: [
     CommonModule,

@@ -16,34 +16,42 @@ import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component'
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 import { MedicoComponent } from './mantenimientos/medicos/medico.component';
+import { BusquedasComponent } from './busquedas/busquedas.component';
+import { AdminGuard } from '../guards/admin.guard';
 
 
 const routes: Routes = [
-    //Router del modulo de pages
-    {
-        path: "dashboard",
-        component: PagesComponent,
-        canActivate: [AuthGuard],
-        children: [
-          { path: "", component: DashboardComponent, data: {title: "Dashboard"} },
-          { path: "account-settings", component: AccountSettingsComponent,  data: {title: "Account settings"} },
-          { path: "grafica", component: Grafica1Component,  data: {title: "Graficas"} },
-          { path: "perfil", component: PerfilComponent,  data: {title: "Perfil de usuario"} },
-          { path: "progress", component: ProgressComponent,  data: {title: "Progess Bar"}},
-          { path: "promesas", component: PromesasComponent,  data: {title: "Promesas"} },
-          { path: "rxjs", component: RxjsComponent,  data: {title: "Rxjs"} },
+  //Router del modulo de pages
+  {
+    path: "dashboard",
+    component: PagesComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: "", component: DashboardComponent, data: { title: "Dashboard" } },
+      { path: "account-settings", component: AccountSettingsComponent, data: { title: "Account settings" } },
+      { path: "buscar/:termino", component: BusquedasComponent, data: { title: "Busqueda" } },
+      { path: "buscar", redirectTo: "" },
+      { path: "grafica", component: Grafica1Component, data: { title: "Graficas" } },
+      { path: "perfil", component: PerfilComponent, data: { title: "Perfil de usuario" } },
+      { path: "progress", component: ProgressComponent, data: { title: "Progess Bar" } },
+      { path: "promesas", component: PromesasComponent, data: { title: "Promesas" } },
+      { path: "rxjs", component: RxjsComponent, data: { title: "Rxjs" } },
 
-          //Mantenimientos
-          { path: "usuarios", component: UsuariosComponent,  data: {title: "Usuarios de aplicación"} },
-          { path: "hospitales", component: HospitalesComponent,  data: {title: "Hospitales"} },
-          { path: "medicos", component: MedicosComponent,  data: {title: "Médicos"} },
-          { path: "medico/:id", component: MedicoComponent,  data: {title: "Actualizar médico"} },
-        ]
-      }
+      //Mantenimientos
+      { path: "hospitales", component: HospitalesComponent, data: { title: "Hospitales" } },
+      { path: "hospitales/:hospital", component: HospitalesComponent, data: { title: "Hospitales" } },
+      { path: "medicos", component: MedicosComponent, data: { title: "Médicos" } },
+      { path: "medico/:id", component: MedicoComponent, data: { title: "Actualizar médico" } },
+
+      //rutas protegidas o solo para admin
+      { path: "usuarios", canActivate: [AdminGuard], component: UsuariosComponent, data: { title: "Usuarios de aplicación" } },
+      { path: "usuarios/:usuario", canActivate: [AdminGuard], component: UsuariosComponent, data: { title: "Usuarios de aplicación" } },
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }

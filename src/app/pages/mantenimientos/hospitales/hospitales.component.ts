@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Hospital } from 'src/app/models/hospital.model';
 import { delay, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { HospitalService } from '../../../services/hospital.service';
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { BusquedasService } from '../../../services/busquedas.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-hospitales',
@@ -15,18 +16,30 @@ import { BusquedasService } from '../../../services/busquedas.service';
 })
 export class HospitalesComponent implements OnInit {
 
+  @ViewChild('txtTermino') txtTermino?:ElementRef;
+  
   public hospitales?: Hospital[];
   public cargando: boolean = true;
   private imgSubs?: Subscription;
-  private hospitalesTemp:Hospital[] = [];
+  private timeout:any;
 
-  constructor(private hs:HospitalService, private mi:ModalImagenService, private bs: BusquedasService) { }
+
+  constructor(private hs:HospitalService, private mi:ModalImagenService, private bs: BusquedasService, private ar:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.cargarHospitales();
 
     this.imgSubs = this.mi.nuevaImagen.pipe(delay(100)).subscribe(img =>{
       this.cargarHospitales();
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.ar.params.subscribe(({hospital}) =>{
+      if(hospital){ 
+        this.buscar(hospital);
+        this.txtTermino!.nativeElement.value = hospital;
+        }
     });
   }
 
@@ -84,13 +97,18 @@ export class HospitalesComponent implements OnInit {
   }
 
   buscar(termino: string) {
-    if(termino.trim().length === 0){
-     return  this.cargarHospitales();
-    }
-    this.bs.buscar("hospitales", termino)
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.cargando =true;
+      if (termino.trim().length < 1) {
+        return this.cargarHospitales();
+      }
+      this.bs.buscar("hospitales", termino.trim())
       .subscribe(resultados => {
         this.hospitales = resultados!;
+        this.cargando =false;
       });
       return;
+    }, 500);
   }
 }

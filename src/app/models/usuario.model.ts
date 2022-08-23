@@ -9,7 +9,7 @@ export class Usuario{
     public password?:string,
     public img?:string,
     public google?:string,
-    public role?:string,
+    public role?:"USER_ROLE" | "ADMIN_ROLE",
     public uid?:string
     ){ }
 

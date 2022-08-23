@@ -14,16 +14,15 @@ export class SidebarComponent {
   menuItems: any[]=[];
 
   public usuario?:Usuario;
-  // public imgUrl?:string;
-  // public nombre?:string;
+  
   
   
   constructor(private SS: SidebarService, private us:UsuarioService) { 
+    
     this.menuItems= SS.menu;
 
     this.usuario= us.usuario;
-    // this.imgUrl = us.usuario?.imagenUrl;
-    // this.nombre= us.usuario?.nombre;
+
   }
 
   logout(){

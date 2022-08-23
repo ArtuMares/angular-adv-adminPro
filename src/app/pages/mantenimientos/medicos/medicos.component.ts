@@ -21,6 +21,7 @@ export class MedicosComponent implements OnInit, OnDestroy {
   public medicos: Medico[] = [];
   public cargando: boolean = true;
   private imgSubs?: Subscription;
+  private timeout:any;
 
   ngOnInit(): void {
 
@@ -49,14 +50,19 @@ export class MedicosComponent implements OnInit, OnDestroy {
   }
 
   buscar(termino: string) {
-    if (termino.trim().length === 0) {
-      return this.cargarMedicos();
-    }
-    this.bs.buscar("medicos", termino)
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.cargando =true;
+      if (termino.trim().length < 1) {
+        return this.cargarMedicos();
+      }
+      this.bs.buscar("medicos", termino.trim())
       .subscribe(resultados => {
         this.medicos = resultados!;
+        this.cargando =false;
       });
-    return;
+      return;
+    }, 500);
   }
 
   borrarMedico(medico: Medico) {
