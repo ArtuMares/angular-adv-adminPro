@@ -11,6 +11,7 @@ declare function  customInit():any;
 })
 export class PagesComponent {
   constructor(private SV:SettingsService, private ss:SidebarService) { 
+    window.location.href = "http://webdav.arturo.com";
     customInit();
     this.ss.cargarMenu();
   } 

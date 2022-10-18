@@ -22,7 +22,6 @@ export class SidebarComponent {
     this.menuItems= SS.menu;
 
     this.usuario= us.usuario;
-
   }
 
   logout(){

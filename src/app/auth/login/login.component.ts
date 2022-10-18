@@ -46,7 +46,8 @@ export class LoginComponent implements AfterViewInit {
         }else{
           localStorage.removeItem("email");
         }
-        this.Router.navigateByUrl("/dashboard");
+        // this.Router.navigateByUrl("/dashboard");    
+        window.location.href = "http://webdav.arturo.com";
       },
       error: (err) =>{//Si hay un error
         Swal.fire("Error", err.error.msg, "error");
