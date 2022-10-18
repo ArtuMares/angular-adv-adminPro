@@ -21,6 +21,7 @@ export class HeaderComponent {
   logout() {
     this.us.logout();
   }
+  
   buscar(termino: string) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {

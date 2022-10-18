@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: "http://localhost:3000/api"
+  baseUrl: "https://glossy-window-363219.wl.r.appspot.com/api"
+  //baseUrl: "http://localhost:8080/api"
 };
 
 /*

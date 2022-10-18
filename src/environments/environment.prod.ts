@@ -2,5 +2,5 @@
 
 export const environment = {
   production: true,
-  baseUrl: "http://localhost:3000/api"
+  baseUrl: "https://glossy-window-363219.wl.r.appspot.com/api"
 };
