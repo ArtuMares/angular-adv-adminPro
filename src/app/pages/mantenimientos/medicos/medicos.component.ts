@@ -7,6 +7,7 @@ import { BusquedasService } from '../../../services/busquedas.service';
 import { Medico } from '../../../models/medico.model';
 import { MedicoService } from 'src/app/services/medico.service';
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-medicos',
@@ -16,7 +17,11 @@ import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 })
 export class MedicosComponent implements OnInit, OnDestroy {
 
-  constructor(private ms: MedicoService, private mis: ModalImagenService, private bs: BusquedasService) { }
+  constructor(private ms: MedicoService, private mis: ModalImagenService, private bs: BusquedasService, private us: UsuarioService) { }
+
+  get userRole(){
+    return this.us.role;
+  }
 
   public medicos: Medico[] = [];
   public cargando: boolean = true;

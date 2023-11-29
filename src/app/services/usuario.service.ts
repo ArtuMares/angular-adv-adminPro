@@ -48,7 +48,7 @@ export class UsuarioService {
     return this.usuario?.uid || "";
   }
 
-  get role(): "USER_ROLE" | "ADMIN_ROLE"{
+  get role(): "USER_ROLE" | "ADMIN_ROLE" | "MTN_ROLE"{
     return this.usuario?.role!;
   }
 

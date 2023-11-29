@@ -16,7 +16,7 @@ export class RegisterComponent {
   public registerForm = this.fb.group({
     nombre: ["Arturo Mares", Validators.required],
     email: ["test118@gmail.com", [Validators.required, Validators.email]],
-    password: ["123456", Validators.required],
+    password: ["123456", [Validators.required, Validators.minLength(8), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{7,15}')]],
     password2: ["123456", Validators.required],
     terminos: [true, Validators.required],
   }, {
@@ -31,7 +31,7 @@ export class RegisterComponent {
     if (this.registerForm.invalid) {
       return;
     }
-    //Realizat el posteo de información
+    //* Realizar el posteo de información
     this.us.crearUsuario(this.registerForm.value)
       .subscribe({
         next: (resp) => {//Si todo sale bien
@@ -45,6 +45,7 @@ export class RegisterComponent {
         }
       });
   }
+  
   campoNoValido(campo: string): boolean {
     if (this.registerForm.get(campo)?.invalid && this.formSubmitted) {
       return true;
@@ -55,7 +56,7 @@ export class RegisterComponent {
   aceptaTerminos(): boolean {
     return (!this.registerForm.get("terminos")?.value && this.formSubmitted)
   }
-  contrasenasNoValidas() {
+  contrasenasDiferentes() {
     const pass1 = this.registerForm.get("password")?.value;
     const pass2 = this.registerForm.get("password2")?.value;
 
@@ -64,7 +65,9 @@ export class RegisterComponent {
     } else {
       return false;
     }
-
+  }
+  contrasenasNoValidas(){
+    return 
   }
   //validación de passwords
   passwordsIguales(pass1Name: string, pass2Name: string) {

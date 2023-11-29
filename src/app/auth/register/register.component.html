@@ -4,11 +4,7 @@
     <section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/background/login-register.jpg);">
         <div class="login-box card">
             <div class="card-body">
-
-
                 <form class="form-horizontal form-material" id="loginform" [formGroup]="registerForm" autocomplete="off" (ngSubmit)="crearUsuario()">
-
-                    
                     <a href="javascript:void(0)" class="text-center db"><img src="../assets/images/logo-icon.png" alt="Home" /><br/><img src="../assets/images/logo-text.png" alt="Home" /></a>
                     <h3 class="box-title m-t-40 m-b-0">Register Now</h3><small>Create your account and enjoy</small>
                     <div class="form-group m-t-20">
@@ -44,10 +40,13 @@
                         <div class="col text-danger">
                            <p *ngIf="campoNoValido('nombre')" >*El nombre es obligatorio</p>
                            <p *ngIf="campoNoValido('email')" >*El email es obligatorio</p>
-                           <p *ngIf="contrasenasNoValidas()" >*Las contraseñas deben ser iguales </p>
+                           <p *ngIf="campoNoValido('contraseña')" >*La contraseña debe ser de 8 caracteres o más</p> 
+                           <p *ngIf="registerForm.get('password')?.getError('pattern') && this.formSubmitted" >*La contraseña debe contener mayúsculas, minúsculas, números y caracteres especiales</p> 
+                           <p *ngIf="contrasenasDiferentes()" >*Las contraseñas deben ser iguales </p>
                            <p *ngIf="aceptaTerminos()" >*Debe aceptar los términos de uso</p>
                         </div>
                     </div>
+                    <!-- <pre>{{registerForm.get('password')?.getError('pattern')|json}}</pre> -->
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
                             <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Sign Up</button>

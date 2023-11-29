@@ -8,6 +8,7 @@ import { HospitalService } from '../../../services/hospital.service';
 import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 import { BusquedasService } from '../../../services/busquedas.service';
 import { ActivatedRoute } from '@angular/router';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-hospitales',
@@ -24,7 +25,11 @@ export class HospitalesComponent implements OnInit {
   private timeout:any;
 
 
-  constructor(private hs:HospitalService, private mi:ModalImagenService, private bs: BusquedasService, private ar:ActivatedRoute) { }
+  constructor(private hs:HospitalService, private mi:ModalImagenService, private bs: BusquedasService, private ar:ActivatedRoute, private us: UsuarioService) { }
+
+  get userRole(){
+    return this.us.role;
+  }
 
   ngOnInit(): void {
     this.cargarHospitales();
